@@ -1,0 +1,2 @@
+# jSAM
+jSAM is an Eclipse plugin integrating a set of tools for stochastic analysis of concurrent and distributed systems specified using process algebras.  jSAM provides tools that can be used for interactively executing specifications and for simulating their stochastic behaviors. Moreover, jSAM integrates a statistical model-checking that permits verifying if a given system satisfies a given set of logical formulas.  jSAM does not rely on a single specification language, but provides a set of basic classes that can be extended in order to integrate any process algebra.
