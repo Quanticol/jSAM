@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Core
 Bundle-SymbolicName: org.cmg.ml.sam.core
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Export-Package: org.apache.commons.math3,
  org.apache.commons.math3.analysis,
  org.apache.commons.math3.analysis.differentiation,
@@ -83,3 +83,4 @@ Export-Package: org.apache.commons.math3,
  org.cmg.ml.sam.core.mc.pomc,
  org.cmg.ml.sam.core.mc.stat,
  org.cmg.ml.sam.core.sim
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

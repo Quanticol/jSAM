@@ -2,8 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Prism
 Bundle-SymbolicName: org.cmg.ml.sam.prism;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Export-Package: org.cmg.ml.sam.prism
 Require-Bundle: org.cmg.ml.sam;bundle-version="1.0.0",
  org.cmg.ml.sam.core;bundle-version="1.0.0",
  org.junit;bundle-version="4.11.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

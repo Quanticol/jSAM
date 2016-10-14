@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.cmg.ml.sam.xtext.Population.ui
 Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.cmg.ml.sam.xtext.population.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.cmg.ml.sam.xtext.population;visibility:=reexport,
@@ -22,7 +22,7 @@ Require-Bundle: org.cmg.ml.sam.xtext.population;visibility:=reexport,
  org.eclipse.xpand,
  org.cmg.ml.sam;bundle-version="1.0.0"
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.cmg.ml.sam.xtext.population.ui.contentassist,
  org.cmg.ml.sam.xtext.population.ui.contentassist.antlr,
  org.cmg.ml.sam.xtext.population.ui.internal,
