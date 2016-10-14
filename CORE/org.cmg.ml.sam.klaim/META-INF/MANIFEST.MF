@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.ui,
  org.cmg.ml.sam;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.cmg.ml.sam.klaim.core,
+Export-Package: org.cmg.ml.sam.klaim,
+ org.cmg.ml.sam.klaim.core,
  org.cmg.ml.sam.klaim.mosl,
  org.cmg.ml.sam.klaim.sim,
  org.cmg.ml.sam.klaim.smc
