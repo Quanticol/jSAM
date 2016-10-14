@@ -1,0 +1,487 @@
+grammar org.cmg.ml.sam.xtext.klaim.Klaim 
+	with org.eclipse.xtext.common.Terminals 
+//	with org.eclipse.xtext.xbase.Xbase
+
+generate klaim "http://www.cmg.org/ml/sam/xtext/klaim/Klaim"
+
+Model:
+	((localities += LogicalLocality)
+	 | (nodes += NodeDeclaration)
+	 | (processes += ProcessDeclaration)
+	 | (functions += FunctionDeclaration)
+	 | (rates += RateName)
+	 | (constants += ConstantDeclaration)
+	 | (stateformulae += StateFormulaDeclaration)
+	 | (pathformulae += PathFormulaDeclaration)
+	 | (measures += MeasureDeclaration))*
+	 net = NetDeclaration
+	 ;
+
+StateFormulaDeclaration:
+	'formula' name=ID '=' formula=StateFormula ';'
+;
+
+PathFormulaDeclaration:
+	'path' 'formula' name=ID '=' formula=PathFormula ';'
+;
+
+StateFormula returns StateFormula:
+	OrStateFormula
+;
+
+OrStateFormula returns StateFormula:
+	AndStateFormula ('|' { OrStateFormula.left=current } right=OrStateFormula)?
+;
+
+AndStateFormula returns StateFormula:
+	BaseStateFormula ('&' { AndStateFormula.left=current} right=AndStateFormula)?
+;
+
+BaseStateFormula returns StateFormula:
+	  TrueStateFormula
+	| FalseStateFormula
+	| NegationStateFormula
+	| ProbabilityStateFormula 
+	| ResourceStateFormula  
+//	| ExpressionStateFormula 
+	| '(' StateFormula ')'
+;
+
+//ExpressionStateFormula:
+//	'{' guard=Expression '}'
+//;
+
+ProbabilityStateFormula:
+	'P' '{' rel=RelationSymbol bound=Expression '}' '[' path=PathFormula ']'
+;
+
+PathFormula:
+	NextFormula	| UntilFormula
+;
+
+NextFormula:
+	'X' arg=StateFormula
+;
+
+UntilFormula:
+	left=StateFormula 'U' ( isBound?='<=' bound = Expression)? right=StateFormula
+;
+
+ResourceStateFormula:
+	'[' tuple=Template ']' '@' locality=[NodeDeclaration] op=ResourceOperator arg=BaseStateFormula
+;
+
+enum ResourceOperator:
+	CONSUMPTION='->'
+	| PRODUCTION='<-'
+;
+
+NegationStateFormula:
+	'!' arg=BaseStateFormula	
+;
+
+TrueStateFormula: {TrueStateFormula}
+	'true'
+;
+
+FalseStateFormula: {FalseStateFormula}
+	'false'
+;
+
+ConstantDeclaration:
+	'const' type=Type name=ID '=' value=Expression ';'
+;
+
+RateName:
+	'rate' name=ID '=' value=Expression ';'
+;
+
+
+Locality:
+	LogicalLocality|NodeDeclaration
+;
+
+LogicalLocality:
+	'logical' name=ID ';'
+;
+
+NodeDeclaration:
+	'node' name=ID ('environment' '{' ae = AllocationEnvironment '}')? ';'
+;
+
+AllocationEnvironment:
+	maps += LocalityMapping (',' maps += LocalityMapping)*
+;
+
+LocalityMapping:
+	src = [LogicalLocality] '->' trg = [NodeDeclaration]
+;
+
+FunctionDeclaration:
+	'function' returnType=Type name=ID '(' (parameters+=Variable (','  parameters+=Variable)*)? ')' body=Command
+;
+
+ProcessDeclaration:
+	'process' name=ID '(' (parameters+=Variable (','  parameters+=Variable)*)? ')' body=Command 
+;
+
+CalleableElement:
+	ProcessDeclaration|FunctionDeclaration
+;	
+	
+
+Variable:
+	type=Type name=ID
+;
+
+ReferenceableElements:
+	LogicalLocality|NodeDeclaration|Variable|ConstantDeclaration|TupleSelection|FunctionDeclaration|ProcessDeclaration
+;
+
+Command:
+	LocalDeclaration 
+	| ProcessCall 
+	| Action 
+	| Assignment 
+	| IfThenElse 
+	| While 
+	//| For 
+	| '{' Block '}'
+	| ReturnCommand
+;
+
+ReturnCommand: {ReturnCommand}
+	'return' (value=Expression)? ';'
+;
+
+LocalDeclaration:
+	ref=Variable (isInitialized?='=' value=Expression)? ';'
+;
+
+ProcessCall:
+	process = [ProcessDeclaration] '(' (args+=Expression (',' args+=Expression)* )? ')' ';'
+;
+
+Action:
+	EvalAction | OutAction | InputAction | ReadAction
+;
+
+RateExpression:
+	RateReference | RateConstant
+;
+
+RateReference:
+	reference=[RateName]
+;
+
+RateConstant:
+	value=NumberLiteral
+;
+
+
+InputAction:
+	'in' '(' template=Template  ')' '@' target=Expression ':' rate=RateExpression ';'
+;
+
+ReadAction:
+	'read' '(' template=Template  ')' '@' target=Expression ':' rate=RateExpression ';'
+;
+
+OutAction:
+	'out' '(' tuple=Tuple  ')' '@' target=Expression ':' rate=RateExpression ';'
+;
+
+EvalAction:
+	'eval' '(' arg=Expression  ')' '@' target=Expression ':' rate=RateExpression ';'
+;
+
+Tuple:
+	fields += Expression ( ',' fields+=Expression )*
+;
+
+Template:
+	fields += TemplateField ( ',' fields += TemplateField )*
+;
+
+TemplateField:
+	AnyFormalField | FormalField | ActualField | TypedFormalField
+;
+
+AnyFormalField: {AnyFormalField}
+	'*' 
+;
+
+TypedFormalField:
+	'(' type=Type ')'	
+;
+
+FormalField:
+	'?' variable=[Variable]
+;
+
+ActualField:
+	value=Expression
+;
+
+Assignment:
+	ref=[Variable] '=' exp=Expression ';'
+;
+
+While:
+	'while' '(' guard=Expression ')' body=Command
+;
+
+/* 
+For:
+	'for' name=ID 'from' init=Expression  'to' end=Expression body=Command
+;
+*/
+
+IfThenElse: 
+	'if' '('guard=Expression')' thenBranch=Command (=> 'else' elseBranch=Command)?
+;
+
+
+Block: {Block}
+	( commands+=Command )*
+;
+
+
+ /*TypeExpression:
+	//type=Type //(modifiers += TypeModifier)*
+	Type
+;*/
+
+enum TypeModifier:
+	LISTM='list' |
+	ARRAYM='array'
+;
+
+
+enum Type:
+	KBOOL='bool' |
+	KINT='int' |
+	KDOUBLE='real' |
+	KSTRING='string' |
+	KLOCALITY='locality' |
+	KPROCESS='proc' |
+	KVOID = 'void'
+;
+
+
+Expression:
+	Disjunction
+;
+
+Disjunction returns Expression:
+	Conjunction ({Disjunction.left=current} '|' right=Disjunction)?
+;
+
+Conjunction returns Expression:
+	Negation ({Conjunction.left=current} '&' right=Conjunction)?
+;
+
+Negation returns Expression:
+	'!' {Negation} arg=Relation |
+	Relation
+;
+
+Relation returns Expression:
+	SummationSubtraction ({Relation.left=current} rel=RelationSymbol right=Relation)?
+;
+
+SummationSubtraction returns Expression:
+	MultiplicationDivision ({SummationSubtraction.left=current} op=('+'|'-') right=SummationSubtraction )?
+;
+
+MultiplicationDivision returns Expression:
+	ListExpression ({MultiplicationDivision.left=current} op=('*'|'/') right=MultiplicationDivision )?
+;
+
+ListExpression returns Expression:
+	BaseExpression ({ListExpression.head=current} '::' tail=ListExpression)?
+;
+
+BaseExpression returns Expression:
+	'true' {TrueExpression}
+	| 'false' {FalseExpression}
+	|'(' Expression ({IfThenElseExpression.guard=current} '?'  thenBranch=Expression ':' elseBranch=Expression )? ')'
+	| '[]' {EmptyList} 
+	| StringLiteral
+	| NumberLiteral
+	| MinExpression
+	| MaxExpression
+	| FloorExpression
+	| CeilExpression
+	| PowExpression
+	| ModExpression
+	| LogExpression
+	| SinExpression
+	| CosExpression
+	| TanExpression
+	| ASinExpression
+	| ACosExpression
+	| ATanExpression
+	| SelfExpression
+	| CloseLocality
+	| ReferenceCallAccess
+//	| CountExpression
+	| AverageExpression
+	| HeadExpression
+	| TailExpression
+;
+
+HeadExpression:
+	'head' '(' exp=Expression ')'
+;
+
+TailExpression:
+	'tail' '(' exp=Expression ')'
+;
+
+CloseLocality:
+	'&' arg=BaseExpression
+;
+
+//CountExpression:
+//	'#' arg=BaseExpression
+//;
+
+AverageExpression:
+	'average' '(' arg=Expression ')'
+;
+
+SelfExpression: {SelfExpression}
+	'self'
+;
+
+StringLiteral:
+	value=STRING	
+;
+
+
+ReferenceCallAccess returns Expression:
+	Reference 
+	=> ( 
+			 {Call.function=current} '(' ( args+=Expression (',' args+=Expression )* )? ')' 
+		   | {SelectionExpression.tuple=current} '.' '(' element=Expression ')'
+		   | {ArrayExpression.array=current} '[' element=Expression ']'
+		   )?
+;
+
+Reference:
+	ref=[ReferenceableElements]
+;
+
+
+NumberLiteral hidden() :
+	intpart=INT (isDouble ?= '.' decimal=INT)?
+;
+
+LogExpression:
+	'ln' '(' arg=Expression ')'
+;
+
+ModExpression:
+	'mod' '(' arg=Expression ',' mod=Expression ')'
+;
+
+PowExpression:
+	'pow' '(' base=Expression ',' exp=Expression ')'
+;
+
+FloorExpression:
+	'floor' '(' arg=Expression ')'
+;
+
+CeilExpression:
+	'ceil' '(' arg=Expression ')'
+;
+
+MinExpression:
+	'min' '(' left = Expression ',' right = Expression  ')'
+;
+
+MaxExpression:
+	'man' '(' left = Expression ',' right = Expression ')'
+;
+
+SinExpression:
+	'sin' '(' arg = Expression ')'
+;
+
+CosExpression:
+	'cos' '(' arg = Expression ')'
+;
+
+TanExpression:
+	'tan' '(' arg = Expression ')'
+;
+
+ATanExpression:
+	'atan' '(' arg = Expression ')'
+;
+
+ASinExpression:
+	'asin' '(' arg = Expression ')'
+;
+
+ACosExpression:
+	'acos' '(' arg = Expression ')'
+;
+
+enum RelationSymbol:
+	EQ='=' |
+	NEQ='!=' |
+	LES='<'  | 
+	LEQ='<=' |
+	GEQ='>=' |
+	GTR='>'
+;
+
+
+NetDeclaration:
+	"net" ":" elements += Component ('||' elements += Component )*
+;
+
+Component:
+	node=[NodeDeclaration] '::' element=NodeElement (isMultiple?='{' size=Expression '}')?
+;
+
+NodeElement:
+	ProcessElement|TupleElement
+;
+
+ProcessElement:
+	process=[ProcessDeclaration] '(' (args += Expression (',' args+= Expression)*)? ')'
+;
+
+TupleElement:
+	'[' tuple=Tuple ']'
+;
+
+MeasureDeclaration:
+	'measure' name=ID '=' exp=Measure ';'
+;
+
+Measure:
+	'select' tuples += TupleSelection ( 'and' tuples+= TupleSelection )*
+	'in'
+		expression=Expression
+;
+
+TupleSelection:
+	name=ID '=' '[' template = Template ']' '@' locality=LocalityPattern
+;
+
+LocalityPattern:
+	ValueLocalityPattern | AnyLocality
+;
+
+ValueLocalityPattern:
+	loc=[NodeDeclaration]
+;
+
+AnyLocality: {AnyLocality}
+	'*'
+;

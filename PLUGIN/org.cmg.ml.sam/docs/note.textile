@@ -1,0 +1,16 @@
+
+h1. jSAM: Java StochAstic Mode-checker
+
+{toc}
+
+
+h2. Overview
+
+jSAM is an Ecplise plug-in that provides a set of java classes that can be used to develop tools that support quantitative analysis of systems. These tools can be easily integrated in jSAM while providing a common environment where different approaches can be used and contrasted.
+
+Basic features of jSAM are:
+* Simulation
+* Interactive execution
+* Model-checking
+* Path-probability estimation
+

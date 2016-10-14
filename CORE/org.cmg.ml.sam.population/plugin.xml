@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.cmg.ml.sam.extensions.component">
+      <component
+            class="org.cmg.ml.sam.population.PopulationPlugIn">
+      </component>
+   </extension>
+   <extension
+         point="org.cmg.ml.sam.extensions.specification">
+      <fileelement>
+         <shortdescription
+               value="Population language">
+         </shortdescription>
+         <fileextension
+               value="pop">
+         </fileextension>
+         <longdescription
+               value="A language for Population based specifications.">
+         </longdescription>
+      </fileelement>
+   </extension>
+
+</plugin>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.cmg.ml.sam.extensions.component">
+      <component
+            class="org.cmg.ml.sam.klaim.KlaimPlugIn">
+      </component>
+   </extension>
+   <extension
+         point="org.cmg.ml.sam.extensions.specification">
+      <fileelement>
+         <shortdescription
+               value="StoKlaim Specification">
+         </shortdescription>
+         <fileextension
+               value="net">
+         </fileextension>
+         <longdescription
+               value="StoKlaim specification.">
+         </longdescription>
+      </fileelement>
+   </extension>
+
+</plugin>

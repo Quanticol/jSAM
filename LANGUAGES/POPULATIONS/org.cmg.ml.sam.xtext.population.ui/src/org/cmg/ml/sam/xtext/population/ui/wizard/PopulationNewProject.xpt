@@ -1,0 +1,66 @@
+«IMPORT org::cmg::ml::sam::xtext::population::ui::wizard»
+
+«DEFINE main FOR PopulationProjectInfo»
+«EXPAND model FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR PopulationProjectInfo»
+«FILE "models/Model.pop"-»
+/*
+ * This is an example model
+ */
+constant N = 100;
+			
+constant alpha_e = 0.1;
+constant alpha_i = 0.2;
+constant alpha_r = 0.2;
+constant alpha_a = 1-alpha_r*alpha_i;
+constant alpha_s = 1-alpha_a;
+			
+action inf_ext: alpha_e;
+action inf_sus: 1/alpha_i;
+action activate: alpha_a;
+action patch: alpha_r;
+action loss: alpha_s;
+			
+state S {
+	inf_ext.E
+	+ inf_sus.E
+}
+			
+state E {
+	activate.I
+}
+			
+state I {
+	patch.R
+}
+			
+state R {
+	loss.S
+}
+			
+system mySystem = < S[200] >;
+			
+formula test1: P{ <= 0.2 }[ true U<=100 I];
+			
+//This is a comment!
+formula test2: P{ <= 0.2 }[ frc(I)<0.25 U<=100 E];
+
+//This is a comment!
+formula test3: P{ <= 0.2 }[ test1 U<=100 test2 ];
+«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE workflow FOR PopulationProjectInfo»
+«FILE "src/Generator.mwe2"-»
+module Generator
+
+var targetDir = "src-gen"
+var modelPath = "src/model"
+
+Workflow {
+	component = @workflow.PopulationGenerator auto-inject {}
+}
+«ENDFILE»
+«ENDDEFINE»

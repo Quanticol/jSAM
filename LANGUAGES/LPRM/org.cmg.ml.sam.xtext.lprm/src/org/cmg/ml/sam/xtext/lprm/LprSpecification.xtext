@@ -1,0 +1,259 @@
+grammar org.cmg.ml.sam.xtext.lprm.LprSpecification with org.eclipse.xtext.common.Terminals
+
+generate lprSpecification "http://www.cmg.org/ml/sam/xtext/lprm/LprSpecification"
+
+Model:
+	'specification' name=ID ';'
+	(
+		elements += Element
+	)*
+	;
+	
+Element:
+	Module
+	| NameableElement
+	| System
+	| Label
+	| StateFormulaDeclaration
+	| PathFormulaDeclaration
+;
+
+PathFormulaDeclaration:
+	'path' 'formula' name=ID '=' formula=PathFormula ';'
+;
+
+StateFormulaDeclaration:
+	('state')? 'formula' name=ID '=' formula=StateFormula ';'
+;
+
+StateFormula:
+	OrStateFormula
+;
+
+OrStateFormula returns StateFormula:
+	AndStateFormula ({OrStateFormula.left=current} 'or' right=AndStateFormula)*
+;
+
+AndStateFormula returns StateFormula:
+	BasicStateFormula ({AndStateFormula.left=current} 'and' right=BasicStateFormula)*
+;
+
+BasicStateFormula returns StateFormula:
+	{LabelReference} label=[Label]
+	| {OnLinePredicate} '{' expression=Expression '}'
+	| '(' StateFormula ')'
+	| {NotStateFormula} 'not' expression=BasicStateFormula
+	| {ProbabilisticQuantification} '\\P' '{' op=('<'|'<='|'>'|'>=') bound=Expression '}' '[' formula=PathFormula ']'
+;
+
+PathFormula:
+	{NextPathFormula} '\\X' formula=BasicStateFormula
+	| {UntilPathFormula} left=BasicStateFormula '\\U' ('<=' steps=Expression)? right=BasicStateFormula
+;
+
+Label:
+	'label' name=ID '=' expression=Expression ';'
+;
+
+System:
+	'system' name=ID '='
+		body=SystemBody
+	('init'
+		(assignment += Assignment ';')*	
+	)?
+	'endsystem'
+;
+
+Assignment:
+	name=ID ':' '<' (store += Store (',' store+=Store)*)? '>'
+;
+
+Store:
+	variable=[Variable] '=' expression=Expression
+;
+
+SystemBody:
+	RenamedModule (
+		{Interleaving.left=current} '||' right=RenamedModule
+		| {Coopration.left=current} '|' (activities += Activity (',' activities+=Activity)* )? '|' right=RenamedModule
+		| {Synchronization.left=current} '|*|' right=RenamedModule				
+	)*	
+;
+
+RenamedModule returns SystemBody:
+	RestrictedModule ({RenamedModule.body=current} '[' renaming += NameMapping ']')?
+;
+
+RestrictedModule returns SystemBody:
+	BasicModule ({RestrictedModule.body=current} '/' '{' restricted +=[Activity] '}')?
+;
+
+BasicModule returns SystemBody:
+	'('	SystemBody ')'
+	| ModuleReference
+;
+
+ModuleReference:
+	module=[Module]
+;
+
+NameableElement:
+	  ReferenceableElement
+	| Activity	
+;
+
+ReferenceableElement:
+	GlobalVariableDeclaration | Constant | MacroFunction
+;
+
+
+
+Activity:
+	'activity' name=ID ';' 
+;
+
+Module:
+	'module' name=ID ':'
+	(
+	'variables' 
+		(variables += Variable)*		
+	)?
+	'rules'
+		body=ModuleBody
+	'endmodule'
+;
+
+ModuleBody:
+	Rules | BodyRenaming
+;
+
+Rules: {Rules}
+	(rules += Rule)*
+;
+
+BodyRenaming:
+	module=[Module] '[' (renaming += NameMapping (',' renaming += NameMapping )* )? ']'
+;
+
+NameMapping:
+	src=[NameableElement] '->' trg=[NameableElement]
+;
+
+Rule:
+	'[' (activity=[Activity])? ']' guard=Expression '->' (commands += Command ('+' commands += Command)*)? ';'
+;
+
+Command:
+	weight=Expression ':' '{' (updates += Update (',' updates += Update)* )? '}'
+;
+
+Update:
+	target=[Variable] '<-' expression=Expression
+;
+
+MacroFunction:
+	'function' type=Type name=ID '=' expression=Expression ';'
+;
+
+Constant:
+	('constant'|'const') type=Type name=ID '=' expression=Expression ';'
+;
+
+GlobalVariableDeclaration returns Variable:
+	'variable' Variable
+;
+
+Variable:
+	name=ID ':' type=TypesForVariables ';'
+;
+
+Type:
+	IntegerType | BooleanType | FloatType
+;
+
+IntegerType: {IntegerType}
+	('int'|'integer')
+;
+
+FloatType: {FloatType}
+	'double'
+;
+
+TypesForVariables returns Type:
+	IntervalType | BooleanType
+;
+
+IntervalType:
+	'[' from=Expression '..' to=Expression ']'
+;
+
+BooleanType: {BooleanType}
+	('bool' | 'boolean')
+;
+
+
+Expression:
+	Or
+;
+
+Or returns Expression:
+	And ({Or.left=current} 'or' right=And)*
+;
+
+And returns Expression:
+	Comparison ({And.left=current} 'and' right=Comparison)*
+;
+
+Comparison returns Expression:
+	PlusOrMinus (
+		{Equal.left=current} '==' right=PlusOrMinus
+		| {NotEqual.left=current} '!=' right=PlusOrMinus
+		| {LessOrEqual.left=current} ('<='|'=<') right=PlusOrMinus
+		| {Less.left=current} '<' right=PlusOrMinus
+		| {Greater.left=current} '>' right=PlusOrMinus
+		| {GreaterOrEqual.left=current} ('>='|'=>') right=PlusOrMinus
+	)?
+;
+
+PlusOrMinus returns Expression:
+	MulOrDiv (
+		{Plus.left=current} '+' right=MulOrDiv
+		| {Minus.left=current} '-' right=MulOrDiv
+		| {Modulo.left=current} '%' right=MulOrDiv
+	)*
+;
+
+MulOrDiv returns Expression:
+	IfThenElse (
+		{Mul.left=current} '*' right=IfThenElse
+		| {Div.left=current} '/' right=IfThenElse
+	)*
+;
+
+IfThenElse returns Expression:
+	Primary	({IfThenElse.guard=current} '?' thenCase=Primary ':' elseCase=Primary  )?
+;
+
+Primary returns Expression:
+	'(' Expression ')'
+	| {Not} 'not' expression=Primary 
+	| Atomic
+;
+
+Atomic returns Expression:
+	{IntConstant} value=INT
+	| {FloatConstant} value=FLOAT
+	| {Reference} reference=[ReferenceableElement] 
+	| {Log} 'log' '(' argument=Expression (',' base=Expression)? ')'
+	| {Exp} 'exp' '(' (argument=Expression)? ')'
+	| {Ceil} 'ceil' '(' argument=Expression ')'
+	| {Floor} 'floor' '(' argument=Expression ')'
+	| {Pow} 'pow' '(' base=Expression ',' exponent=Expression ')'
+	| {Min} 'min' '(' left= Expression ',' right=Expression ')'
+	| {Max} 'max' '(' left= Expression ',' right=Expression ')'
+	| {True} 'true'
+	| {False} 'false'
+;
+
+
+terminal FLOAT: '-'?('0'..'9')*'.'('0'..'9')*;

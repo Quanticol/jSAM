@@ -1,0 +1,378 @@
+grammar org.cmg.ml.sam.xtext.prism.Prism with org.eclipse.xtext.common.Terminals
+
+generate prism "http://www.cmg.org/ml/sam/xtext/prism/Prism"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Model:
+	type=ModelType
+	(elements += Element)*
+	;
+
+Element:
+	Module 
+	| Global 
+	| Constant 
+	| Reward 
+	| InitPredicate 
+	| Formula 
+	| Label		
+	| PrismSystem
+	| PathFormulaDeclaration		 
+	| StateFormulaDeclaration
+;
+
+PathFormulaDeclaration:
+	'pathformula' name=ID '=' formula=PathFormula ';'
+;
+
+StateFormulaDeclaration:
+	'stateformula' name=ID '=' formula=StateFormula ';'
+;
+
+PathFormula:
+	NextFormula | UntilFormula
+;
+
+UntilFormula:
+	left=StateFormula '\\U' (bound=Bound)? right=StateFormula 
+;
+
+Bound:
+	relop=Relations limit=INT
+;
+
+NextFormula:
+	'\\X' arg=StateFormula
+;
+
+StateFormula:
+	StateOr
+;
+
+StateOr returns StateFormula:
+	StateAnd ({StateOr.left=current} '|' right=StateOr)?
+;
+
+StateAnd returns StateFormula:
+	BaseStateFormula ({StateAnd.left=current} '&' right=StateAnd)?
+;
+
+BaseStateFormula returns StateFormula:
+	AtomicStateFormula
+	| NegationFormula
+	| '(' StateFormula ')'
+	| ProbabilityFormula
+;
+
+ProbabilityFormula:
+	'\\P' relation=Relations value=NumericalValue '[' path=PathFormula ']'
+;
+
+
+NegationFormula:
+	'!' argument=BaseStateFormula
+;
+
+
+AtomicStateFormula:
+	'{' exp=Expression '}'
+;
+
+
+PrismSystem:
+	'system'
+		AlphabetisedParallelComposition
+	'endsystem'
+;
+
+AlphabetisedParallelComposition returns PrismSystem:
+	AsynchronousParallelComposition ({AlphabetisedParallelComposition.left=current} '||' right=AlphabetisedParallelComposition)?
+;
+
+AsynchronousParallelComposition returns PrismSystem:
+	RestrictedParallelComposition ({AsynchronousParallelComposition.left=current} '|||' right=AsynchronousParallelComposition)?
+;
+
+RestrictedParallelComposition returns PrismSystem:
+	Hiding ({RestrictedParallelComposition.left=current} '|[' (actions+=ID (',' actions+=ID)*)? '|]' right=RestrictedParallelComposition)?
+;
+
+Hiding returns PrismSystem:
+	Renaming ({Hiding.argument=current} '/' '{' (actions+=ID (',' actions+=ID)*)? '}')?
+;
+
+Renaming returns PrismSystem:
+	BaseModule ({Renaming.argument=current} '{' (renaming+=ActionRenaming (',' renaming+=ActionRenaming)*)? '}')?
+;
+
+ActionRenaming:
+	source=ID '<-' target=ID
+;
+
+BaseModule returns PrismSystem:
+	ModuleReference	
+	| '(' AlphabetisedParallelComposition ')'
+;
+
+ModuleReference:
+	module=[Module]
+;
+
+Global returns Variable:
+	'global' Variable
+;
+
+
+Label:
+	'label' name=STRING '=' expression=Expression ';'
+;
+
+
+Formula:
+	'formula' name=ID '=' expression=Expression ';'
+;
+
+
+InitPredicate:
+	'init'
+		predicate=Expression
+	'endinit'
+;
+
+
+Reward: {Reward}
+	'rewards' (label=STRING)? (cases+=RewardCase)* 'endrewards'
+;
+
+RewardCase:
+	('[' action=ID ']')? guard=Expression ':' value=Expression ';'
+;
+
+
+
+Constant:
+	'const' type=ConstantType name=ID '=' exp=Expression ';'
+;
+
+enum ConstantType:
+	CINT='int' | CBOOL='bool' | CDOUBLE='double'
+;
+
+Module:
+	'module' name=ID body=ModuleBody 'endmodule'
+;
+
+ModuleBody:
+	ModuleBodyDeclaration | VariableRenaming
+;
+	
+VariableRenaming:
+	'=' module=[Module] '[' (renaming+=SymbolRenaming) (',' renaming+=SymbolRenaming)* ']'
+;
+
+SymbolRenaming:
+	source=ID '=' target=ID
+;
+
+
+ModuleBodyDeclaration: {ModuleBodyDeclaration}
+		(variables+=Variable)*
+		(commands+=Command)*
+;
+
+Command:
+	'[' (act=ID)? ']' guard=Expression '->' updates+=Update ('+' updates+=Update)* ';'
+;
+
+Update:
+	(weight=Expression ':')? elements+=UpdateElement ('&' elements+=UpdateElement)*
+;
+
+UpdateElement:
+	'(' variable=NEXTID '=' expression=Expression ')'
+;
+
+terminal NEXTID: ID'\'';
+
+Variable:
+	name=ID ':' type=Type ('init' init=Expression)? ';'
+;
+
+Type:
+	BooleanType | IntervalType
+;
+
+IntervalType:
+	'[' min=Expression INTERVAL max=Expression ']'
+;
+
+
+BooleanType: {BooleanType}
+	'bool'
+;
+
+Expression:
+	IfThenElse
+;
+
+IfThenElse returns Expression:
+	Implies ({IfThenElse.guard=current} '?' thenCase=IfThenElse ':' elseCase=Implies)*
+;
+
+Implies returns Expression:
+	IfAndOnlyIf ({Implies.left=current} '=>' right=IfAndOnlyIf)*
+;
+
+IfAndOnlyIf returns Expression:
+	OrExpression ({IfAndOnlyIf.left=current} '<=>' right=OrExpression)*
+;
+
+OrExpression returns Expression:
+	AndExpression ({OrExpression.left=current} '|' right=AndExpression)*
+;
+
+AndExpression returns Expression:
+	Negation ({AndExpression.left=current} '&' right=Negation)*
+;
+
+Negation returns Expression:
+	('!' {Negation} arg=Negation)
+	| RelExpression
+;
+
+RelExpression returns Expression:
+	SumExpression ({RelExpression.left=current} relop=Relations right=SumExpression)*
+;
+
+enum Relations:
+	LSS='<'
+	| LEQ = '<='
+	| EQ = '='
+	| NEQ = '!='
+	| GTR = '>'
+	| GEQ = '>='
+;
+
+
+SumExpression returns Expression:
+	MulExpression ({SumExpression.left=current} op=('+'|'-') right=MulExpression)*
+;
+
+MulExpression returns Expression:
+	BaseExpression ({MulExpression.left=current} op=('*'|'/') right=BaseExpression)*
+;
+
+
+
+BaseExpression returns Expression:
+	NumericalValue	
+	| Reference
+	| True
+	| False
+	| '(' Expression ')'
+	| MinFunction
+	| MaxFunction
+	| PowFunction
+	| FloorFunction
+	| CeilFunction
+	| ModFunction
+	| LogFunction
+;
+
+LogFunction:
+	'log' '(' argument=Expression ',' base=Expression ')'
+;
+
+
+ModFunction:
+	'mod' '(' dividend=Expression ',' divisor=Expression ')'
+;
+
+
+CeilFunction:
+	'ceil' '(' arg=Expression ')'
+;
+
+
+FloorFunction:
+	'floor' '(' arg=Expression ')'
+;
+
+
+PowFunction:
+	'pow' '(' base=Expression ',' exponent=Expression ')'
+;
+
+
+MaxFunction:
+	'max' '(' args+=Expression (',' args+=Expression)+ ')'
+;
+
+
+MinFunction:
+	'min' '(' args+=Expression (',' args+=Expression)+ ')'
+;
+
+
+/*
+    log(x,b), which computes the logarithm of x to base b. 
+    *  */
+
+
+True: {True}
+	'true'
+;
+
+False: {False}
+	'false'
+;
+
+Reference:
+	reference=ID
+;
+
+
+NumericalValue returns Expression:
+	DecimalLiteral//DecimalLiteral|IntegerLiteral	
+;
+
+/* 
+ExponentialLiteral returns NumericalValue:
+	DecimalLiteral ({ExponentialLiteral.realNumber = current} ('e'|'E') exp=INT)?
+;
+*/
+
+DecimalLiteral returns NumericalValue:
+	IntegerLiteral ({DecimalLiteral.integerPart = current} decimalPart=DECIMAL_PART)?
+;
+
+//NumericalLiteral:
+//	integerPart=INT
+//;
+
+IntegerLiteral:
+	integerPart = INT
+;
+
+
+terminal DTMC: 'probabilistic'|'dtmc';
+terminal MDP: 'nondeterminitic'|'mdp';
+terminal CTMC: 'stochastic'|'ctmc';
+
+ModelType :
+	DTMC|MDP|CTMC	
+;
+
+terminal STRING	: 
+			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"'
+		; 
+
+terminal INTERVAL:
+	'..'
+;
+		
+terminal DECIMAL_PART :
+	'.' ('0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9')*
+;
+

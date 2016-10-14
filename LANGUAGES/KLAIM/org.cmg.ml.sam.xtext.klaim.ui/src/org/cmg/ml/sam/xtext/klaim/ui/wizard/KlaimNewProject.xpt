@@ -1,0 +1,14 @@
+«IMPORT org::cmg::ml::sam::xtext::klaim::ui::wizard»
+
+«DEFINE main FOR KlaimProjectInfo»
+«EXPAND model FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR KlaimProjectInfo»
+«FILE "src/model/Model.net"-»
+/*
+ * This is an example model
+ */
+Hello Xtext!
+«ENDFILE»
+«ENDDEFINE»

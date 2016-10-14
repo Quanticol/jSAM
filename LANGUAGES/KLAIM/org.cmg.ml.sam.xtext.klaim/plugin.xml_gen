@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cmg.org/ml/sam/xtext/klaim/Klaim" 
+       class = "org.cmg.ml.sam.xtext.klaim.klaim.KlaimPackage"
+       genModel = "model/generated/Klaim.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>

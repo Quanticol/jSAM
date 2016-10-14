@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cmg.org/ml/sam/xtext/lprm/LprSpecification" 
+       class = "org.cmg.ml.sam.xtext.lprm.lprSpecification.LprSpecificationPackage"
+       genModel = "model/generated/LprSpecification.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>

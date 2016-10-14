@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.cmg.ml.sam.extensions.simulator">
+      <simulator
+            class="org.cmg.ml.sam.population.simulator.PopulationSimulator"
+            language="pop">
+      </simulator>
+   </extension>
+   <extension
+         point="org.cmg.ml.sam.extensions.simulator">
+      <simulator
+            class="org.cmg.ml.sam.population.simulator.PopulationFastSimulator"
+            language="pop">
+      </simulator>
+   </extension>
+   <extension
+         point="org.cmg.ml.sam.extensions.modelchecker">
+      <modelchecker
+            class="org.cmg.ml.sam.population.modelchecker.ModelCheckerOfIndividualsExtension"
+            language="pop">
+      </modelchecker>
+   </extension>
+   <extension
+         point="org.cmg.ml.sam.extensions.modelchecker">
+      <modelchecker
+            class="org.cmg.ml.sam.population.modelchecker.FlyFastModelCheckerExtension"
+            language="pop">
+      </modelchecker>
+   </extension>
+
+</plugin>

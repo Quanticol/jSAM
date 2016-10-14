@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Simulator
+Bundle-SymbolicName: org.cmg.ml.sam.population.tools;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.cmg.ml.sam.population.simulator.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.cmg.ml.sam;bundle-version="1.0.0",
+ org.cmg.ml.sam.core;bundle-version="1.0.0",
+ org.cmg.ml.sam.population;bundle-version="1.0.0",
+ org.cmg.ml.sam.xtext.population;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.core.resources

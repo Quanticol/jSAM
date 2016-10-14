@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Prism2
+Bundle-SymbolicName: org.cmg.ml.sam.prism2
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.cmg.ml.sam.prism2.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.cmg.ml.sam.core;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

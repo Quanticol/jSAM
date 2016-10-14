@@ -1,0 +1,38 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.cmg.ml.sam.xtext.lprm
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.cmg.ml.sam.xtext.lprm; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.xtext.xbase;resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.cmg.ml.sam.lprm;bundle-version="1.0.0",
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.eclipse.xtext.xbase.lib
+Import-Package: org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.cmg.ml.sam.xtext.lprm,
+ org.cmg.ml.sam.xtext.lprm.services,
+ org.cmg.ml.sam.xtext.lprm.lprSpecification,
+ org.cmg.ml.sam.xtext.lprm.lprSpecification.impl,
+ org.cmg.ml.sam.xtext.lprm.lprSpecification.util,
+ org.cmg.ml.sam.xtext.lprm.serializer,
+ org.cmg.ml.sam.xtext.lprm.parser.antlr,
+ org.cmg.ml.sam.xtext.lprm.parser.antlr.internal,
+ org.cmg.ml.sam.xtext.lprm.validation,
+ org.cmg.ml.sam.xtext.lprm.scoping,
+ org.cmg.ml.sam.xtext.lprm.generator,
+ org.cmg.ml.sam.xtext.lprm.formatting
+
