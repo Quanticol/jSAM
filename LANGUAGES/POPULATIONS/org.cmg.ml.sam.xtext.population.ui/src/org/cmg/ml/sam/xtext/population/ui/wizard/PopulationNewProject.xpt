@@ -14,7 +14,7 @@ constant N = 100;
 constant alpha_e = 0.1;
 constant alpha_i = 0.2;
 constant alpha_r = 0.2;
-constant alpha_a = 1-alpha_r*alpha_i;
+constant alpha_a = 1-(alpha_r*alpha_i);
 constant alpha_s = 1-alpha_a;
 			
 action inf_ext: alpha_e;

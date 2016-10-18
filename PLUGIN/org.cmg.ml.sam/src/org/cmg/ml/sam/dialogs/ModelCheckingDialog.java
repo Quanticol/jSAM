@@ -1,6 +1,6 @@
 /*
  * Michele Loreti, Concurrency and Mobility Group
- * Universitˆ di Firenze, Italy
+ * Universitï¿½ di Firenze, Italy
  * (C) Copyright 2013.
  *
  * All rights reserved. This program and the accompanying materials
@@ -46,7 +46,7 @@ public class ModelCheckingDialog extends Dialog {
 			LinkedList<IModelCheckerExtensionPoint> languageModelCheckers, Shell parent,
 			int style) {
 		super(parent, style);
-		setText("Simulation...");
+		setText("Model checking...");
 		this.languageModelCheckers = languageModelCheckers;
 		this.model = model;
 		this.file = file;
