@@ -124,6 +124,7 @@ public class FastSimulationComposite extends Composite {
 											"SAM",
 											"No configuration has been selected!");
 								}
+								main.close();
 							}
 							
 						});

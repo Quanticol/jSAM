@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+
+	<parent>
+		<relativePath>../../RELENG/org.cmg.jsam.tycho.parent/pom.xml</relativePath>
+		<groupId>org.cmg.jsam</groupId>
+		<artifactId>org.cmg.jsam.tycho.root</artifactId>
+		<version>1.1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>org.cmg.jsam.tycho.releng</artifactId>
+	<packaging>pom</packaging>
+	
+	<modules>
+	
+		<module>../../DEVTOOLS/org.cmg.jsam.targetplatform</module>
+
+		<module>../../CORE/org.cmg.ml.sam.core</module>
+
+		<module>../../PLUGIN/org.cmg.ml.sam</module>
+
+		<module>../../CORE/org.cmg.ml.sam.klaim</module>
+
+		<module>../../CORE/org.cmg.ml.sam.population</module>
+		<module>../../LANGUAGES/POPULATIONS/org.cmg.ml.sam.xtext.population</module>
+		<module>../../LANGUAGES/POPULATIONS/org.cmg.ml.sam.population.tools</module>
+		<module>../../LANGUAGES/POPULATIONS/org.cmg.ml.sam.xtext.population.ui</module>
+
+		<module>../../PLUGIN/org.cmg.ml.sam.feature</module>
+
+		<module>../../LANGUAGES/POPULATIONS/org.cmg.ml.sam.xtext.population.sdk</module>
+
+		<module>../../RELENG/org.cmg.jsam.repository</module>
+
+<!--
+		<module>../../CORE/org.cmg.jsam</module>
+
+		<module>../../PLUGINS/CCSP/org.cmg.jsam.ccsp.runtime</module>
+		<module>../../PLUGINS/CCSP/org.cmg.jsam.xtext.ccsp</module>
+		<module>../../PLUGINS/CCSP/org.cmg.jsam.xtext.ccsp.ui</module>
+		
+		<module>../../PLUGINS/SLTS/org.cmg.jsam.slts.runtime</module>
+		<module>../../PLUGINS/SLTS/org.cmg.jsam.xtext.slts</module>
+		<module>../../PLUGINS/SLTS/org.cmg.jsam.xtext.slts.ui</module>
+
+		<module>../../PLUGINS/CLTS/org.cmg.jsam.clts.runtime</module>
+		<module>../../PLUGINS/CLTS/org.cmg.jsam.xtext.clts</module>
+		<module>../../PLUGINS/CLTS/org.cmg.jsam.xtext.clts.ui</module>
+
+		<module>../../CORE/org.cmg.jsam.feature</module>
+		<module>../../PLUGINS/CCSP/org.cmg.jsam.xtext.ccsp.sdk</module>
+		<module>../../PLUGINS/SLTS/org.cmg.jsam.xtext.slts.sdk</module>
+		<module>../../PLUGINS/CLTS/org.cmg.jsam.xtext.clts.sdk</module>
+		
+-->		
+		
+	</modules>
+</project>

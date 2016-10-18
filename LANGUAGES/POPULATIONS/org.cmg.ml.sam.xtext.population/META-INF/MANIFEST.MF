@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.cmg.ml.sam.xtext.Population
-Bundle-Vendor: My Company
+Bundle-Name: Population Models Xtext API
+Bundle-Vendor: Michele Loreti
 Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.cmg.ml.sam.xtext.population;singleton:=true
 Bundle-ActivationPolicy: lazy

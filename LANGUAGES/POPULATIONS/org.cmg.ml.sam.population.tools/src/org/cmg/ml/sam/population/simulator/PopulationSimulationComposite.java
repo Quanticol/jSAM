@@ -29,6 +29,7 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -69,23 +70,21 @@ public class PopulationSimulationComposite extends Composite {
 //		shell.setText(getText());
 //		shell.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
-		this.setLayoutData(new RowData(208, SWT.DEFAULT));
-		this.setLayout(new GridLayout(3, false));
+//		this.setLayoutData(new RowData(208, SWT.DEFAULT));
+		this.setLayout(new GridLayout(2, false));
 
 		Label lblSystem = new Label(this, SWT.NONE);
-		lblSystem.setSize(26, 152);
+//		lblSystem.setSize(26, 152);
 		lblSystem.setText("System:");
+		lblSystem.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		
 		combo = new Combo(this, SWT.READ_ONLY);
 		combo.setItems(spec.getConfigurationNames());
+		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		new Label(this, SWT.NONE);
-
-
 		Label lblStartTime = new Label(this, SWT.NONE);
 		lblStartTime.setSize(26, 152);
 		lblStartTime.setText("Deadline:");
-		new Label(this, SWT.NONE);
 		
 //		Text deadline = new Text(composite, SWT.BORDER);
 //		deadline.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -97,25 +96,29 @@ public class PopulationSimulationComposite extends Composite {
 		deadline.setSelection(100);
 		deadline.setIncrement(1);
 		deadline.setPageIncrement(100);
-		deadline.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		deadline.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblIterations = new Label(this, SWT.NONE);
 		lblIterations.setSize(35, 152);
 		lblIterations.setText("Iterations:");
-		new Label(this, SWT.NONE);
+
 		iterations = new Spinner(this, SWT.BORDER | SWT.RIGHT_TO_LEFT);;
 		iterations.setMinimum(0);
 		iterations.setSelection(100);
 		iterations.setMaximum(Integer.MAX_VALUE);
 		iterations.setIncrement(1);
 		iterations.setPageIncrement(100);
-		iterations.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		iterations.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 //		Composite composite_1 = new Composite(composite, SWT.NONE);
 //		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 //		composite_1.setLayoutData(new RowData(208, SWT.DEFAULT));
 //		
-		Button btnOk = new Button(this, SWT.NONE);
+		Composite composite = new Composite(this, SWT.NONE);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, true, 2, 1));
+		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		Button btnOk = new Button(composite, SWT.NONE);
 		btnOk.setText("Ok");
 		btnOk.addSelectionListener( new SelectionAdapter() {
 
@@ -129,11 +132,12 @@ public class PopulationSimulationComposite extends Composite {
 							"SAM",
 							"No configuration has been selected!");
 				}
+				main.close();
 			}
 			
 		});
 
-		Button btnCancel = new Button(this, SWT.NONE);
+		Button btnCancel = new Button(composite, SWT.NONE);
 		btnCancel.setText("Cancel");
 		btnCancel.addSelectionListener( new SelectionAdapter() {
 

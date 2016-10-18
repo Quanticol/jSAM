@@ -61,8 +61,7 @@ public class SimulationDataSample implements ISample {
 	 */
 	@Override
 	public double getYPlusError() {
-		// TODO Auto-generated method stub
-		return 0;
+		return sample.getDelta();
 	}
 
 	/* (non-Javadoc)
@@ -79,8 +78,7 @@ public class SimulationDataSample implements ISample {
 	 */
 	@Override
 	public double getYMinusError() {
-		// TODO Auto-generated method stub
-		return 0;
+		return sample.getDelta();
 	}
 
 	/* (non-Javadoc)

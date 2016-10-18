@@ -1,6 +1,6 @@
 /*
  * Michele Loreti, Concurrency and Mobility Group
- * Universitˆ di Firenze, Italy
+ * Universitï¿½ di Firenze, Italy
  * (C) Copyright 2013.
  *
  * All rights reserved. This program and the accompanying materials
@@ -21,10 +21,12 @@ public class SimulationData {
 	
 	private double x;
 	private double y;
+	private double delta;
 
-	public SimulationData( double x , double y ) {
+	public SimulationData( double x , double y , double delta ) {
 		this.x = x;
 		this.y = y;
+		this.delta = delta;
 	}
 	
 	public double getX() {
@@ -33,6 +35,10 @@ public class SimulationData {
 	
 	public double getY() {
 		return y;
+	}
+	
+	public double getDelta() {
+		return delta;
 	}
 
 	/* (non-Javadoc)

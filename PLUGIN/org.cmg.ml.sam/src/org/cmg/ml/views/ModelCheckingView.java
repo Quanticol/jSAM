@@ -1,6 +1,6 @@
 /*
  * Michele Loreti, Concurrency and Mobility Group
- * Universitˆ di Firenze, Italy
+ * Universitï¿½ di Firenze, Italy
  * (C) Copyright 2013.
  *
  * All rights reserved. This program and the accompanying materials
@@ -91,6 +91,7 @@ public class ModelCheckingView extends ViewPart {
 		scrolledComposite.setContent(table);
 		scrolledComposite.setMinSize(table.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		item.setControl(scrolledComposite);
+		tabFolder.setSelection(item);
 	}
 	
 	public void addPathProbabilityResults( String stateName , LinkedList<Pair<String,Double>> results ) {

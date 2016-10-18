@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Simulator
+Bundle-Name: jSAM Tools for Population Models
 Bundle-SymbolicName: org.cmg.ml.sam.population.tools;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.cmg.ml.sam.population.simulator.Activator
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.core.resources
+Bundle-Vendor: Michele Loreti

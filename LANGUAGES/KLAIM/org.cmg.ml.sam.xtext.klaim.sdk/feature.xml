@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.cmg.ml.sam.xtext.klaim.sdk"
-      label="Klaim SDK Feature "
-      version="1.1.0.qualifier">
+      label="jSAM Klaim PlugIn"
+      version="1.1.0.qualifier"
+      provider-name="Michele Loreti">
 
    <plugin
          id="org.cmg.ml.sam.xtext.klaim"

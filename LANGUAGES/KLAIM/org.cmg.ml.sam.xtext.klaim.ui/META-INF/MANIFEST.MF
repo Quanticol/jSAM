@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.cmg.ml.sam.xtext.klaim.ui
-Bundle-Vendor: My Company
+Bundle-Name: jSAM Klaim UI
+Bundle-Vendor: Michele Loreti
 Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.cmg.ml.sam.xtext.klaim.ui; singleton:=true
 Bundle-ActivationPolicy: lazy

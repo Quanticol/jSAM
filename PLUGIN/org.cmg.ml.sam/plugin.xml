@@ -134,15 +134,9 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="org.cmg.ml.sam"
-            class="org.cmg.ml.views.ModelCheckingView"
-            id="org.cmg.ml.sam.views.ModelCheckingView"
-            name="Model checking View"
-            restorable="true">
-      </view>
-      <view
             category="org.cmg.ml.sam.views"
             class="org.cmg.ml.views.GraphView"
+            icon="icons/chart_line.gif"
             id="org.cmg.ml.sam.views.GraphView"
             name="Graph View">
       </view>
@@ -152,17 +146,9 @@
       </category>
       <view
             category="org.cmg.ml.sam"
-            class="org.cmg.ml.sam.views.SAMModelCheckingView"
-            icon="icons/sample.gif"
-            id="org.cmg.ml.sam.views.SAMModelCheckingView"
-            name="SAM Model Checking Panel">
-      </view>
-      <view
-            allowMultiple="false"
-            category="org.cmg.ml.sam"
-            class="org.cmg.ml.sam.views.SAMSimulationView"
-            id="org.cmg.ml.sam.views.SAMSimulationView"
-            name="SAM Simulation Panel"
+            class="org.cmg.ml.views.ModelCheckingView"
+            id="org.cmg.ml.sam.views.ModelCheckingView"
+            name="Model checking result view"
             restorable="true">
       </view>
    </extension>
@@ -215,6 +201,13 @@
             id="org.cmg.ml.sam.perspective"
             name="SAM Perspective">
       </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.cmg.ml.sam.newwizard"
+            name="jSAM Plugin">
+      </category>
    </extension>
 
 </plugin>

@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tests
+Bundle-Name: Klaim Simulation API Tests
 Bundle-SymbolicName: org.cmg.ml.sam.klaim.tests
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.cmg.ml.aqua.klaim.core.test
 Require-Bundle: org.cmg.ml.sam.klaim;bundle-version="1.1.0",
  org.cmg.ml.sam.core;bundle-version="1.1.0"
+Bundle-Vendor: Michele Loreti

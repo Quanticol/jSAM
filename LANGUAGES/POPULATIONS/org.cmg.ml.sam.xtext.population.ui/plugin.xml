@@ -343,10 +343,10 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.eclipse.xtext.projectwiz"
+            category="org.cmg.ml.sam.newwizard"
             class="org.cmg.ml.sam.xtext.population.ui.PopulationExecutableExtensionFactory:org.cmg.ml.sam.xtext.population.ui.wizard.PopulationNewProjectWizard"
             id="org.cmg.ml.sam.xtext.population.ui.wizard.PopulationNewProjectWizard"
-            name="Population Project"
+            name="FlyFast Project"
             project="true">
       </wizard>
    </extension>

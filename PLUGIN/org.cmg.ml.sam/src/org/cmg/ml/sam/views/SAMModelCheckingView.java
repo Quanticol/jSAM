@@ -187,12 +187,19 @@ public class SAMModelCheckingView extends ViewPart {
 		}
 		IFile file = (IFile) editor.getResource();
 		String extension = file.getFileExtension();
+		CTabItem first = null;
 		for (IModelCheckerExtensionPoint modelChecker : loadModelCheckers( extension )) {
-			CTabItem tabItem = new CTabItem(viewer, SWT.CLOSE);
+			CTabItem tabItem = new CTabItem(viewer, SWT.NONE);
+			if (first == null) {
+				first = tabItem;
+			}
 			tabItem.setText(modelChecker.getName());
 			Composite c = modelChecker.createModelCheckingComposite(file,getModel(editor), viewer.getShell() ,viewer);
 			tabItem.setControl(c);
 			tabs.add(tabItem);			
+		}
+		if (first != null) {
+			viewer.setSelection(first);
 		}
 	}
 
@@ -341,7 +348,6 @@ public class SAMModelCheckingView extends ViewPart {
 	 */
 	public void setFocus() {
 		viewer.setFocus();
-		System.out.println("Maremma gatta....");
 	}
 	
 	protected EObject getModel(XtextEditor editor) {

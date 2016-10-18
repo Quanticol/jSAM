@@ -127,7 +127,7 @@ public class ProbabilisticSimulator<T extends StochasticState<T>> {
 	public List<SimulationSeries> getSeries() {
 		LinkedList<SimulationSeries> toReturn = new LinkedList<SimulationSeries>();
 		for( int i=0 ; i<measures.size() ; i++ ) {
-			toReturn.add(new SimulationSeries(measures.get(i).getName(), collected[i], dt));
+			toReturn.add(new SimulationSeries(measures.get(i).getName(), iterations , collected[i], dt));
 		}
 		return toReturn;				
 	}

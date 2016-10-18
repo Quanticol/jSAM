@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Population
+Bundle-Name: Population Models Runtime API
 Bundle-SymbolicName: org.cmg.ml.sam.population;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.cmg.ml.sam.population.Activator
@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.cmg.ml.sam.population
+Bundle-Vendor: Michele Loreti

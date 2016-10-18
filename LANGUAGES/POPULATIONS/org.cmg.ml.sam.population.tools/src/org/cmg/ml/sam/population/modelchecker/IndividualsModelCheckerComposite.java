@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.MessageBox;
@@ -158,36 +159,36 @@ public class IndividualsModelCheckerComposite extends Composite {
 		onTheFlyPrecision.setDigits(9);
 		onTheFlyPrecision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		TabItem tbtmStatistical = new TabItem(modelCheckerTab, SWT.NONE);
-		tbtmStatistical.setText("Statistical");
-		
-		Composite statisticalComposite = new Composite(modelCheckerTab, SWT.NONE);
-		tbtmStatistical.setControl(statisticalComposite);
-		statisticalComposite.setLayout(new GridLayout(2, false));
-		
-		Label lblErrorProbability = new Label(statisticalComposite, SWT.NONE);
-		lblErrorProbability.setText("Error probability:");
-		
-		errorProbability = new Spinner(statisticalComposite, SWT.BORDER);
-		GridData gd_errorProbability = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_errorProbability.widthHint = 302;
-		errorProbability.setLayoutData(gd_errorProbability);
-		errorProbability.setMaximum(1000000000);
-		errorProbability.setMinimum(1);
-		errorProbability.setSelection(1000000);
-		errorProbability.setDigits(9);
-		
-		Label lblErrorThreashold = new Label(statisticalComposite, SWT.NONE);
-		lblErrorThreashold.setText("Error threashold:");
-		
-		errorThreashold = new Spinner(statisticalComposite, SWT.BORDER);
-		GridData gd_errorThreashold = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_errorThreashold.widthHint = 148;
-		errorThreashold.setLayoutData(gd_errorThreashold);
-		errorThreashold.setMaximum(1000000000);
-		errorThreashold.setMinimum(1);
-		errorThreashold.setSelection(1000000);
-		errorThreashold.setDigits(9);
+//		TabItem tbtmStatistical = new TabItem(modelCheckerTab, SWT.NONE);
+//		tbtmStatistical.setText("Statistical");
+//		
+//		Composite statisticalComposite = new Composite(modelCheckerTab, SWT.NONE);
+//		tbtmStatistical.setControl(statisticalComposite);
+//		statisticalComposite.setLayout(new GridLayout(2, false));
+//		
+//		Label lblErrorProbability = new Label(statisticalComposite, SWT.NONE);
+//		lblErrorProbability.setText("Error probability:");
+//		
+//		errorProbability = new Spinner(statisticalComposite, SWT.BORDER);
+//		GridData gd_errorProbability = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+//		gd_errorProbability.widthHint = 302;
+//		errorProbability.setLayoutData(gd_errorProbability);
+//		errorProbability.setMaximum(1000000000);
+//		errorProbability.setMinimum(1);
+//		errorProbability.setSelection(1000000);
+//		errorProbability.setDigits(9);
+//		
+//		Label lblErrorThreashold = new Label(statisticalComposite, SWT.NONE);
+//		lblErrorThreashold.setText("Error threashold:");
+//		
+//		errorThreashold = new Spinner(statisticalComposite, SWT.BORDER);
+//		GridData gd_errorThreashold = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+//		gd_errorThreashold.widthHint = 148;
+//		errorThreashold.setLayoutData(gd_errorThreashold);
+//		errorThreashold.setMaximum(1000000000);
+//		errorThreashold.setMinimum(1);
+//		errorThreashold.setSelection(1000000);
+//		errorThreashold.setDigits(9);
 		
 		Composite composite_1 = new Composite(this, SWT.NONE);
 		composite_1.setLayout(new GridLayout(3, false));
@@ -286,13 +287,13 @@ public class IndividualsModelCheckerComposite extends Composite {
 	}
 
 	private ModelCheckerI<PopulationState> getModelChecker() {
-		if (modelCheckerTab.getSelectionIndex() == ONTHEFLY_MODELCHECKER) {
-			return new OnTheFlyProbabilisticModelChecker<PopulationState>();
-		} 
-		if (modelCheckerTab.getSelectionIndex() == STATISTICAL_MODELCHECKER) {
-			return new StatisticProbabilisticModelChecker<PopulationState>();
-		}
-		return null;
+//		if (modelCheckerTab.getSelectionIndex() == ONTHEFLY_MODELCHECKER) {
+//			return new OnTheFlyProbabilisticModelChecker<PopulationState>();
+//		} 
+//		if (modelCheckerTab.getSelectionIndex() == STATISTICAL_MODELCHECKER) {
+//			return new StatisticProbabilisticModelChecker<PopulationState>();
+//		}
+		return new OnTheFlyProbabilisticModelChecker<PopulationState>();
 	}
 
 	private void doModelCheckingOfStateFormulae() {

@@ -49,7 +49,7 @@ public class SamProjectHelper {
 
 	public static final String SAM_MAIN = "org.cmg.ml.sam";
 	public static final String SAM_CORE = "org.cmg.ml.sam.core";
-	public static final String APACHE_MATH_COMMONS = "org.apache.commons.math";
+	public static final String APACHE_MATH_COMMONS = "org.apache.commons.math3";
 	
 
 	/**
@@ -59,7 +59,6 @@ public class SamProjectHelper {
 	public static Collection<? extends String> addSamBudles(List<String> bundles ) {
 		bundles.add(SAM_MAIN);
 		bundles.add(SAM_CORE);
-		bundles.add(APACHE_MATH_COMMONS);
 		return bundles;
 	}
 	

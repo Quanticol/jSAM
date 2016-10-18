@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="eTAPAs" url="http://etapas.sourceforge.net">
+      eTAPAs is an Eclipse plug-in that provides tools for supporting specification 
+ and analysis of concurrent systems via Process Algebras. eTAPAs supports the use of
+ process algebrae to specify and analyze concurrent systems. Systems are described as 
+ process algebras terms that are then mapped to Labelled Transition Systems (LTSs). 
+ Properties can be verified by checking equivalences between concrete and abstract 
+ system descriptions, or by model checking temporal formulae over the obtained LTS.
+   </description>
+   <feature url="features/org.cmg.ml.sam.feature_1.1.0.qualifier.jar" id="org.cmg.ml.sam.feature" version="1.1.0.qualifier">
+      <category name="jsam"/>
+   </feature>
+   <feature url="features/org.cmg.ml.sam.xtext.population.sdk_1.1.0.qualifier.jar" id="org.cmg.ml.sam.xtext.population.sdk" version="1.1.0.qualifier">
+      <category name="jsam"/>
+   </feature>
+   <category-def name="jsam" label="jSAM Plugin (1.1.x)">
+      <description>
+         jSAM is an Eclipse plugin integrating a set of tools for stochastic analysis of concurrent and distributed systems specified using process algebras.
+
+jSAM provides tools that can be used for interactively executing specifications and for simulating their stochastic behaviors. Moreover, jSAM integrates a statistical model-checking that permits verifying if a given system satisfies a given set of logical formulas.
+
+jSAM does not rely on a single specification language, but provides a set of basic classes that can be extended in order to integrate any process algebra.
+      </description>
+   </category-def>
+</site>

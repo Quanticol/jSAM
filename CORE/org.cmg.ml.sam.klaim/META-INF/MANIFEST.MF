@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Klaim
+Bundle-Name: Klaim Simulation API
 Bundle-SymbolicName: org.cmg.ml.sam.klaim;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.cmg.ml.sam.klaim.Activator
@@ -17,3 +17,4 @@ Export-Package: org.cmg.ml.sam.klaim,
  org.cmg.ml.sam.klaim.smc
 Import-Package: org.apache.commons.math3.random,
  org.junit
+Bundle-Vendor: Michele Loreti

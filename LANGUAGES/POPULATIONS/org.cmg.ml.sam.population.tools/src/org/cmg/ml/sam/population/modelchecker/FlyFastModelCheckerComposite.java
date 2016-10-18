@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.MessageBox;
@@ -86,9 +87,9 @@ public class FlyFastModelCheckerComposite extends Composite {
 		
 		Composite composite = new Composite(this, SWT.BORDER);
 		composite.setLayout(new GridLayout(5, false));
-		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
-		gd_composite.widthHint = 494;
-		gd_composite.heightHint = 263;
+		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+//		gd_composite.widthHint = 494;
+//		gd_composite.heightHint = 263;
 		composite.setLayoutData(gd_composite);
 		new Label(composite, SWT.NONE);
 		
@@ -218,7 +219,7 @@ public class FlyFastModelCheckerComposite extends Composite {
 
 		toolSelection = new TabFolder(this, SWT.NONE);
 		GridData gd_toolSelection = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
-		gd_toolSelection.heightHint = 186;
+		//gd_toolSelection.heightHint = 186;
 		toolSelection.setLayoutData(gd_toolSelection);
 		
 		TabItem tbtmStateFomulae = new TabItem(toolSelection, SWT.NONE);
@@ -230,7 +231,7 @@ public class FlyFastModelCheckerComposite extends Composite {
 		
 		stateFormulae = new List(stateFormulaeComposite, SWT.BORDER);
 		GridData gd_stateFormulae = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_stateFormulae.heightHint = 148;
+		//gd_stateFormulae.heightHint = 148;
 		stateFormulae.setLayoutData(gd_stateFormulae);
 		stateFormulae.setItems(spec.getStateFormulae());
 		
@@ -243,7 +244,7 @@ public class FlyFastModelCheckerComposite extends Composite {
 		
 		pathFormulae = new List(pathFormulaeComposite, SWT.BORDER);
 		GridData gd_pathFormulae = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_pathFormulae.heightHint = 149;
+		//gd_pathFormulae.heightHint = 149;
 		pathFormulae.setLayoutData(gd_pathFormulae);
 		pathFormulae.setItems(spec.getPathFormulae());
 		
@@ -333,20 +334,20 @@ public class FlyFastModelCheckerComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				if (validate()) {
 					scheduleModelCheckingJob();
-//					main.close();					
+					main.close();					
 				}
 			}
 		});
 		btnOk.setText("Ok");
 		
-//		Button btnCancel = new Button(composite_1, SWT.NONE);
-//		btnCancel.setText("Cancel");
-//		btnCancel.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				main.close();					
-//			}
-//		});
+		Button btnCancel = new Button(composite_1, SWT.NONE);
+		btnCancel.setText("Cancel");
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				main.close();					
+			}
+		});
 	}
 
 	protected void scheduleModelCheckingJob() {

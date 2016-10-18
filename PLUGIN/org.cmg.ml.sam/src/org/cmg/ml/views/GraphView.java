@@ -109,7 +109,9 @@ public class GraphView extends ViewPart {
 			
 			//set trace property
 			trace.setPointStyle(PointStyle.XCROSS);
-			
+			trace.setErrorBarEnabled(true);
+			trace.setYErrorBarType(ErrorBarType.BOTH);
+			trace.setXErrorBarType(ErrorBarType.NONE);
 			//add the trace to xyGraph
 			xyGraph.addTrace(trace);	
 		}

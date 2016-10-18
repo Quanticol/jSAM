@@ -18,7 +18,7 @@ constant alpha_a = 1-(alpha_r*alpha_i);
 constant alpha_s = 1-alpha_a;
 			
 action inf_ext: alpha_e;
-action inf_sus: 1/alpha_i;
+action inf_sus: frc(I);
 action activate: alpha_a;
 action patch: alpha_r;
 action loss: alpha_s;

@@ -188,12 +188,19 @@ public class SAMSimulationView extends ViewPart {
 		}
 		IFile file = (IFile) editor.getResource();
 		String extension = file.getFileExtension();
+		CTabItem first = null;
 		for (ISimulator simulator : loadSimulators( extension )) {
-			CTabItem tabItem = new CTabItem(viewer, SWT.CLOSE);
+			CTabItem tabItem = new CTabItem(viewer, SWT.NONE);
+			if (first == null) {
+				first = tabItem;
+			}
 			tabItem.setText(simulator.getName());
 			Composite c = simulator.createSimulationComposite(file,getModel(editor),viewer.getShell() ,viewer);
 			tabItem.setControl(c);
 			tabs.add(tabItem);			
+		}
+		if (first != null) {
+			viewer.setSelection(first);
 		}
 	}
 

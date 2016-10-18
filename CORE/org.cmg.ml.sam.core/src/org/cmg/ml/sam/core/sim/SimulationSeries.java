@@ -27,11 +27,13 @@ public class SimulationSeries {
 	private String name;
 	private SummaryStatistics[] data;
 	private double dt;
+	private int iterations;
 
-	public SimulationSeries( String name , SummaryStatistics[] data , double dt ) {
+	public SimulationSeries( String name , int iterations , SummaryStatistics[] data , double dt ) {
 		this.name = name;
 		this.data = data;
 		this.dt = dt;
+		this.iterations = iterations;
 	}
 
 	public Iterable<SimulationData> getSeries() {
@@ -52,7 +54,7 @@ public class SimulationSeries {
 							public SimulationData next() {
 								SimulationData toReturn = null;
 								if (counter<data.length) {
-									toReturn = new SimulationData( dt*counter , data[counter].getMean() );
+									toReturn = new SimulationData( dt*counter , data[counter].getMean() , data[counter].getStandardDeviation()/Math.sqrt( iterations ));
 									counter++;
 								}				
 								return toReturn;
@@ -70,6 +72,10 @@ public class SimulationSeries {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getIterations() {
+		return iterations;
 	}
 	
 }
