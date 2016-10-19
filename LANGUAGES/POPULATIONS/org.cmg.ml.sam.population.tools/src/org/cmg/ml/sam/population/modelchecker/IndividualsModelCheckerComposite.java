@@ -293,7 +293,7 @@ public class IndividualsModelCheckerComposite extends Composite {
 //		if (modelCheckerTab.getSelectionIndex() == STATISTICAL_MODELCHECKER) {
 //			return new StatisticProbabilisticModelChecker<PopulationState>();
 //		}
-		return new OnTheFlyProbabilisticModelChecker<PopulationState>();
+		return new OnTheFlyProbabilisticModelChecker<PopulationState>(true);
 	}
 
 	private void doModelCheckingOfStateFormulae() {

@@ -229,7 +229,7 @@ public class FlyFastModelCheckerComposite extends Composite {
 		tbtmStateFomulae.setControl(stateFormulaeComposite);
 		stateFormulaeComposite.setLayout(new GridLayout(1, false));
 		
-		stateFormulae = new List(stateFormulaeComposite, SWT.BORDER);
+		stateFormulae = new List(stateFormulaeComposite, SWT.BORDER| SWT.MULTI);
 		GridData gd_stateFormulae = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		//gd_stateFormulae.heightHint = 148;
 		stateFormulae.setLayoutData(gd_stateFormulae);
@@ -430,7 +430,7 @@ public class FlyFastModelCheckerComposite extends Composite {
 	}
 
 	private ModelCheckerI<FastSimulationState> getModelChecker() {
-		return new OnTheFlyProbabilisticModelChecker<FastSimulationState>();
+		return new OnTheFlyProbabilisticModelChecker<FastSimulationState>(true);
 	}
 
 	private void doModelCheckingOfStateFormulae() {

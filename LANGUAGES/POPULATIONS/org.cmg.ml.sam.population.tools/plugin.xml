@@ -18,14 +18,14 @@
    <extension
          point="org.cmg.ml.sam.extensions.modelchecker">
       <modelchecker
-            class="org.cmg.ml.sam.population.modelchecker.ModelCheckerOfIndividualsExtension"
+            class="org.cmg.ml.sam.population.modelchecker.FlyFastModelCheckerExtension"
             language="pop">
       </modelchecker>
    </extension>
    <extension
          point="org.cmg.ml.sam.extensions.modelchecker">
       <modelchecker
-            class="org.cmg.ml.sam.population.modelchecker.FlyFastModelCheckerExtension"
+            class="org.cmg.ml.sam.population.modelchecker.ModelCheckerOfIndividualsExtension"
             language="pop">
       </modelchecker>
    </extension>

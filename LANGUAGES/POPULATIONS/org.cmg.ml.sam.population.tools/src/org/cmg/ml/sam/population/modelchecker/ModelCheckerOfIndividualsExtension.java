@@ -1,6 +1,6 @@
 /*
  * Michele Loreti, Concurrency and Mobility Group
- * Universitˆ di Firenze, Italy
+ * Universitï¿½ di Firenze, Italy
  * (C) Copyright 2013.
  *
  * All rights reserved. This program and the accompanying materials
@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class ModelCheckerOfIndividualsExtension extends AbstractPopulationModelCheckerExtension {
 
-	private static final String MODELCHECKERID = "State Formulae";
+	private static final String MODELCHECKERID = "Individuals";
 
 	@Override
 	public String getName() {

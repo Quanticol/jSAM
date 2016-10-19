@@ -152,9 +152,9 @@ public class TimeDependentSatisfationComposite extends Composite {
 			String[] selectedFormulae, int selectedTab) {
 		PathFormulaeSatisfactionCheckerJob<?> job = null;
 		if (selectedTab == 0) {
-			job = createPopulationStatePathModelCheckingJob( new OnTheFlyProbabilisticModelChecker<PopulationState>() , selectedConfiguration , selectedFormulae );
+			job = createPopulationStatePathModelCheckingJob( new OnTheFlyProbabilisticModelChecker<PopulationState>(true) , selectedConfiguration , selectedFormulae );
 		} else if (selectedTab == 1) {
-			job = createFastSimulationStatePathModelCheckingJob( new OnTheFlyProbabilisticModelChecker<FastSimulationState>(), selectedConfiguration , selectedFormulae);
+			job = createFastSimulationStatePathModelCheckingJob( new OnTheFlyProbabilisticModelChecker<FastSimulationState>(true), selectedConfiguration , selectedFormulae);
 		} else if (selectedTab == 2) {
 			job = createPopulationStatePathModelCheckingJob( new StatisticProbabilisticModelChecker<PopulationState>() , selectedConfiguration , selectedFormulae );
 		}
@@ -199,9 +199,9 @@ public class TimeDependentSatisfationComposite extends Composite {
 			String[] selectedFormulae, int selectedTab) {
 		StateFormulaeSatisfactionCheckerJob<?> job = null;
 		if (selectedTab == 0) {
-			job = createPopulationStateModelCheckingJob( new OnTheFlyProbabilisticModelChecker<PopulationState>() , selectedConfiguration , selectedFormulae );
+			job = createPopulationStateModelCheckingJob( new OnTheFlyProbabilisticModelChecker<PopulationState>(true) , selectedConfiguration , selectedFormulae );
 		} else if (selectedTab == 1) {
-			job = createFastSimulationStateModelCheckingJob( new OnTheFlyProbabilisticModelChecker<FastSimulationState>(), selectedConfiguration , selectedFormulae);
+			job = createFastSimulationStateModelCheckingJob( new OnTheFlyProbabilisticModelChecker<FastSimulationState>(true), selectedConfiguration , selectedFormulae);
 		} else if (selectedTab == 2) {
 			job = createPopulationStateModelCheckingJob( new StatisticProbabilisticModelChecker<PopulationState>() , selectedConfiguration , selectedFormulae );
 		}

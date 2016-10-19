@@ -40,9 +40,15 @@ import org.cmg.ml.sam.core.logic.Until;
 public class OnTheFlyProbabilisticModelChecker<T extends StochasticState<T>> implements FormulaVisitor<T, Boolean>, PathFormulaVisitor<T, Double>, ModelCheckerI<T> {
 	
 	private HashMap<Until<T>, UntilStructure<T>> cache;
+	private boolean complete;
 	
-	public OnTheFlyProbabilisticModelChecker() {
-		this.cache = new HashMap<Until<T>, UntilStructure<T>>();
+	public OnTheFlyProbabilisticModelChecker( ) {
+		this( true );
+	}
+	
+	public OnTheFlyProbabilisticModelChecker( boolean complete ) {
+		this.cache = new HashMap<Until<T>, UntilStructure<T>>();		
+		this.complete = complete;
 	}
 	
 	public boolean sat( T t , StateFormula<T> f ) {
@@ -148,24 +154,42 @@ public class OnTheFlyProbabilisticModelChecker<T extends StochasticState<T>> imp
 					
 				});
 			} else {
-				structure = new BoundUntilStructure<T>( new Predicate<T>() {
-//				structure = new EfficientCompleteBoundUntilStructure<T>( new Predicate<T>() {
+				if (complete) {
+					structure = new EfficientCompleteBoundUntilStructure<T>( new Predicate<T>() {
 
-					@Override
-					public boolean sat(T t) {
-						return OnTheFlyProbabilisticModelChecker.this.sat( t , f.getLeft() );
-					}
-					
-				}, 
-				bound.intValue(), 
-				new Predicate<T>() {
+						@Override
+						public boolean sat(T t) {
+							return OnTheFlyProbabilisticModelChecker.this.sat( t , f.getLeft() );
+						}
+						
+					}, 
+					bound.intValue(), 
+					new Predicate<T>() {
 
-					@Override
-					public boolean sat(T t) {
-						return OnTheFlyProbabilisticModelChecker.this.sat( t , f.getRight() );
-					}
-					
-				});
+						@Override
+						public boolean sat(T t) {
+							return OnTheFlyProbabilisticModelChecker.this.sat( t , f.getRight() );
+						}
+						
+					});
+				} else {
+					new BoundUntilStructure<T>( new Predicate<T>() {
+						@Override
+						public boolean sat(T t) {
+							return OnTheFlyProbabilisticModelChecker.this.sat( t , f.getLeft() );
+						}
+						
+					}, 
+					bound.intValue(), 
+					new Predicate<T>() {
+
+						@Override
+						public boolean sat(T t) {
+							return OnTheFlyProbabilisticModelChecker.this.sat( t , f.getRight() );
+						}
+						
+					});
+				}
 			}
 			cache.put(f, structure);
 		}
