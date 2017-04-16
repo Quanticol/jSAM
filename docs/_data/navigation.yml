@@ -1,12 +1,22 @@
 # main links
+# main links
 main:
-  - title: "Quick-Start Guide"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  # - title: "About"
-  #   url: https://mmistakes.github.io/minimal-mistakes/about/
-  # - title: "Sample Posts"
-  #   url: /year-archive/
-  # - title: "Sample Collections"
-  #   url: /collection-archive/
-  # - title: "Sitemap"
-  #   url: /sitemap/
+  - title: "How to install"
+    url: /install.html
+  - title: "FlyFast"
+    url: /flyfast.html
+  #- title: "Examples"
+  #  url: /examples.html
+  #- title: "Examples"
+  #  url: /examples.html
+  - title: "QUANTICOL"
+    url: http://www.quanticol.eu
+
+
+docs:
+  - title: "FlyFast"
+    children:
+    - title: "FlyFast Language"
+      url: /flyfast/language.html
+    - title: "FlyFast in Action"
+      url: /flyfast/examples.html
